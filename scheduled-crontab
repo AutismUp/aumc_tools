@@ -1,0 +1,9 @@
+0 16 * * 1,4 /mcdata/msm/server_action.py 2020Winter_445 start #Start the 4:45pm Thursday Minecraft session
+45 17 * * 1,4 /mcdata/msm/server_action.py 2020Winter_445 stop #Stop the 4:45pm Thursday Minecraft session
+55 17 * * 1,4 /mcdata/msm/server_action.py 2020Winter_600 start #Start the 6:00pm Thursday Minecraft session
+0 19 * * 1,4 /mcdata/msm/server_action.py 2020Winter_600 stop #Stop the 6:00pm Thursday Minecraft session
+
+5 19 * * 1,4 /mcdata/msm/server_action.py 2020Winter_700 start #Start the 7:10pm Thursday Minecraft session
+10 20 * * 1,4 /mcdata/msm/server_action.py 2020Winter_700 stop #Stop the 7:10pm Thursday Minecraft session
+10 10 * * 2,6 /mcdata/msm/server_action.py 2020Winter_saturday start #Start the Saturday Minecraft session
+15 11 * * 2,6 /mcdata/msm/server_action.py 2020Winter_saturday stop #Stop the Saturday Minecraft session

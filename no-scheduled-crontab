@@ -1,0 +1,1 @@
+15 20 * * 4 /mcdata/msm/reset_crontab.sh #Reload scheduled minecraft world times
