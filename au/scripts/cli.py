@@ -1,16 +1,38 @@
+from au import au
 import click
+import os
+import sys
 
 @click.group()
 def cli():
     pass
 
+
+config_file_path = os.environ.get('AU_CONFIG_FILE')
+if not config_file_path:
+    sys.exit('ERROR: Configuration environmental variable not set')
+
+app = au.AuMc(config_file_path)
+
 @cli.command()
-@click.option('--version', default='latest', help='version of Minecraft to get')
-def build_new_jar(version):
+def check_config():
+    '''Prints the current configuration to the screen to check it.'''
+    click.echo(app.config)
+
+
+@cli.command()
+def reload_config():
+    '''Reload the configuration file'''
+    
+    app.__init__(config_file_path)
+
+
+@cli.command()
+def build_new_jar():
     """Builds the latest version of Spigot Minecraft and copies it to the
        Git repo for publication"""
 
-    click.echo('This builds a new jar')
+    app.build_new_jar()
 
 
 @cli.command()
