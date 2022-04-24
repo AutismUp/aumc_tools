@@ -1,8 +1,8 @@
 {
-    "msm_tools_path": "/mnt/volume_nyc1_03/msm_tools",
-    "msm_server_path": "/mnt/volume_nyc1_03/msm/servers",
+    "msm_tools_path": "/opt/msm_tools",
+    "msm_server_path": "/opt/msm/servers",
     "build_config": {
-        "build_directory": "/mnt/volume_nyc1_03/build_tools",
+        "build_directory": "/opt/build_tools",
         "temp_folders": [
             "BuildData",
             "Bukkit",
@@ -16,7 +16,7 @@
             "BuildTools.log.txt"
         ],
         "delete_spigot_jars": true,
-        "jar_git_repo": "/mnt/volume_nyc1_03/minecraft_jars"
+        "jar_git_repo": "/opt/minecraft_jars"
     },
     "world_config": {
         "server_properties_template": "server.properties.template"
