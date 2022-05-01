@@ -10,7 +10,24 @@ def cli():
 
 config_file_path = os.environ.get('AU_CONFIG_FILE')
 if not config_file_path:
-    sys.exit('ERROR: AU_CONFIG_FILE environmental variable not set')
+    print('WARNING: AU_CONFIG_FILE environmental variable not set')
+    create = input('Do you want to create a new configuration file? (y/n)')
+    if create == 'y':
+        from au.config_templates import default_config, default_server_properties
+
+        with open('config.json', 'w') as config_file:
+            config_file.write(default_config)
+        
+        with open('server.properties.template', 'w') as default_server_properties_file:
+            default_server_properties_file.write(default_server_properties)
+        
+        print('A default configuration file (config.json) and a default server properties file (server.properties.template) have been created in the current working directory.')
+        print('Update the files with desired configurations, place them in the desired location, and set the AU_CONFIG_FILE environmental variable to the path of the config file.')
+        sys.exit()
+    else:
+        sys.exit('Set the AU_CONFIG_FILE environmental variable to the path of the config file.')
+        
+
 
 app = au.AuMc(config_file_path)
 
@@ -45,12 +62,19 @@ def publish_new_jar(filename):
 
 @cli.command()
 @click.option('--name', help='Name of the Minecraft server to create')
+@click.option('--from_config', is_flag=True, help='All new worlds listed in the configuration file')
 @click.option('--jargroup', help='Jargroup to use for the server')
 @click.option('--version', help='Version of Minecraft that will be used')
-def create_new_world(name, jargroup, version):
+def create_new_world(name, from_config, jargroup, version):
     '''Create a new world using Autism Up default configurations.'''
 
-    app.create_new_world(name,jargroup, version)
+    if from_config:
+        click.echo("Creating worlds defined in the configuration file.")
+        for world in app.config['world_config']['world_names']:
+            app.create_new_world(world, jargroup, version)
+    else:
+        click.echo(f"Creating individual world named {name}")
+        app.create_new_world(name, jargroup, version)
 
 
 if __name__ == '__main__':

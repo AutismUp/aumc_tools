@@ -1,4 +1,38 @@
-#Minecraft server properties
+default_config = """{
+    "msm_path": "/opt/msm",
+    "build_config": {
+        "build_directory": "/opt/build_tools",
+        "temp_folders": [
+            "BuildData",
+            "Bukkit",
+            "CraftBukkit",
+            "Spigot",
+            "apache-maven-3.6.0",
+            "work"
+        ],
+        "temp_files": [
+            "BuildTools.log.txt"
+        ],
+        "minecraft_version": "1.18.2",
+        "delete_spigot_jars": true,
+        "jar_git_repo": "/mnt/volume_nyc1_03/minecraft_jars"
+    },
+    "world_config": {
+        "server_properties_template": "/opt/server.properties.template",
+        "world_names": [
+            "world1",
+            "world2"
+        ]
+    },
+    "op_usernames": [
+        "hatchcraft",
+        "Cratzlaff2",
+        "AutismUpMCops"
+    ] 
+}
+"""
+
+default_server_properties = """#Minecraft server properties
 #Wed Dec 30 16:44:40 EST 2020
 msm-version=minecraft/1.18.2
 spawn-protection=16
@@ -52,3 +86,4 @@ enable-jmx-monitoring=false
 enable-rcon=false
 rate-limit=0
 motd=AU
+"""

@@ -223,4 +223,7 @@ mkdir /opt/build_tools
 curl -o /opt/build_tools/BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
 chown -R minecraft:minecraft /opt/build_tools
 
+apt-get install -y python3-pip
 apt-get install -y python-is-python3
+
+install_log "Autism Up Minecraft server is ready to go!"

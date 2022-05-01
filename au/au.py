@@ -139,6 +139,40 @@ class AuMc(object):
         print(f"New jargroup name is {latest_jargroup_name}")
 
 
+    def create_new_world(self, name, jargroup, version):
+
+        msm_server_path = f"{self.config['msm_path']}/servers"
+        time_stamp = datetime.now().strftime('%a %b %d %X EST %Y')
+
+        # 1 - create the world
+        subprocess.call(['sudo', 'msm', 'server', 'create', name])
+        subprocess.call(['sudo', 'msm', name, 'jar', jargroup])
+
+        # 2 - create the eula.txt file
+        eula_file_path = Path(msm_server_path, name, 'eula.txt')
+        eula_file = open(eula_file_path, 'w')
+        eula_file.write("#By changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula).\n")
+        eula_file.write(f'#{time_stamp}\n')
+        eula_file.write('eula=true')
+        eula_file.close()
+        
+        # 3 - update server.properties template and copy to the server folder
+        server_properties = MCConfig(self.config['world_config']['server_properties_template'])
+        server_properties.update_config('msm-version', f'minecraft/{version}')
+        server_properties.update_config('motd', f'Autism Up - {name}')
+        server_properties.write_config(f'{msm_server_path}/{name}/server.properties')
+        
+        subprocess.call(['sudo', 'msm', name, 'start'])
+
+        for operator in self.config['op_usernames']:
+            subprocess.call(['sudo', 'msm', name, 'op', 'add', operator])
+        
+        subprocess.call(['sudo', 'msm', name, 'stop', 'now'])
+        subprocess.call(['sudo', 'msm', name, 'worlds', 'ram', 'world'])
+
+        print(f'World named "{name}" created')
+
+
     def restore_world(self, world_name, restore_to_date):
 
         # Step 1 - Check that the world exists
@@ -169,29 +203,3 @@ class AuMc(object):
         # Step 7 - Restore directory ownership to the "minecraft" Linux user
         subprocess.run(['chown', '-R', 'minecraft', f'{self.msm_path}/servers/{world_name}/worldstorage/world'])
         subprocess.run(['chgrp', '-R', 'minecraft', f'{self.msm_path}/servers/{world_name}/worldstorage/world'])
-
-
-    def create_new_world(self, name, jargroup, version):
-
-        msm_server_path = self.config['msm_server_path']
-        time_stamp = datetime.now().strftime('%a %b %d %X EST %Y')
-
-        # 1 - create the world
-        subprocess.call(['sudo', 'msm', 'server', 'create', name])
-        subprocess.call(['sudo', 'msm', name, 'jar', jargroup])
-
-        # 2 - create the eula.txt file
-        eula_file_path = Path(msm_server_path, name, 'eula.txt')
-        eula_file = open(eula_file_path, 'w')
-        eula_file.write("#By changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula).\n")
-        eula_file.write(f'#{time_stamp}\n')
-        eula_file.write('eula=true')
-        eula_file.close()
-        
-        # 3 - update server.properties template and copy to the server folder
-        server_properties = MCConfig(self.config['world_config']['server_properties_template'])
-        server_properties.update_config('msm-version', f'minecraft/{version}')
-        server_properties.update_config('motd', f'Autism Up - {name}')
-        server_properties.write_config(f'{msm_server_path}/{name}/server.properties')
-
-        print(f'World named "{name}" created')
