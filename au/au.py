@@ -173,6 +173,12 @@ class AuMc(object):
         print(f'World named "{name}" created')
 
 
+    def delete_world(self, name):
+
+        subprocess.call(['sudo', 'msm', name, 'backup'])
+        subprocess.call(['sudo', 'msm', 'server', 'delete', name])
+
+
     def restore_world(self, world_name, restore_to_date):
 
         # Step 1 - Check that the world exists

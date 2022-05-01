@@ -77,5 +77,27 @@ def create_new_world(name, from_config, jargroup, version):
         app.create_new_world(name, jargroup, version)
 
 
+@cli.command()
+@click.option('--name', help='Name of the Minecraft server to delete')
+@click.option('--from_config', is_flag=True, help='All new worlds listed in the configuration file')
+def delete_world(name, from_config):
+    '''Deletes a world using Autism Up configurations'''
+
+    if from_config:
+        click.echo("Deleteing all the worlds from the config file.")
+        confirm = input("Are you sure? (y/n)")
+        if confirm == 'y':
+            for world in app.config['world_config']['world_names']:
+                app.delete_world(world)
+        else:
+            sys.exit('Deletion aborted')
+    else:
+        click.echo(f"Deleteing world named {name}")
+        confirm = input("Are you sure? (y/n)")
+        if confirm == 'y':
+            app.delete_world(name)
+ 
+
+
 if __name__ == '__main__':
     cli()

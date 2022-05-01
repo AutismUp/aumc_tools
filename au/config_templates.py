@@ -1,7 +1,7 @@
 default_config = """{
-    "msm_path": "/opt/msm",
+    "msm_path": "",
     "build_config": {
-        "build_directory": "/opt/build_tools",
+        "build_directory": "",
         "temp_folders": [
             "BuildData",
             "Bukkit",
@@ -13,21 +13,20 @@ default_config = """{
         "temp_files": [
             "BuildTools.log.txt"
         ],
-        "minecraft_version": "1.18.2",
+        "minecraft_version": "",
         "delete_spigot_jars": true,
-        "jar_git_repo": "/mnt/volume_nyc1_03/minecraft_jars"
+        "jar_git_repo": ""
     },
     "world_config": {
-        "server_properties_template": "/opt/server.properties.template",
+        "server_properties_template": "",
         "world_names": [
             "world1",
             "world2"
         ]
     },
     "op_usernames": [
-        "hatchcraft",
-        "Cratzlaff2",
-        "AutismUpMCops"
+        "op1",
+        "op2"
     ] 
 }
 """
