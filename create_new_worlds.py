@@ -69,7 +69,7 @@ if __name__ == '__main__':
     create_world('youth_530', args.jargroupname, args.version)
     create_world('teen_645', args.jargroupname, args.version)
     create_world('survival_saturday', args.jargroupname, args.version)
-    #create_world('experiment', args.jargroupname, args.version)
+    create_world('experiment', args.jargroupname, args.version)
 
 
 

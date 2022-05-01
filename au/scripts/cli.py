@@ -10,7 +10,7 @@ def cli():
 
 config_file_path = os.environ.get('AU_CONFIG_FILE')
 if not config_file_path:
-    sys.exit('ERROR: Configuration environmental variable not set')
+    sys.exit('ERROR: AU_CONFIG_FILE environmental variable not set')
 
 app = au.AuMc(config_file_path)
 
@@ -41,6 +41,16 @@ def publish_new_jar(filename):
     '''Push the noted jarfile of Minecraft to GitHub and create a new JarGroup in MSM'''
 
     click.echo('This publishes the new jar to GitHub')
+
+
+@cli.command()
+@click.option('--name', help='Name of the Minecraft server to create')
+@click.option('--jargroup', help='Jargroup to use for the server')
+@click.option('--version', help='Version of Minecraft that will be used')
+def create_new_world(name, jargroup, version):
+    '''Create a new world using Autism Up default configurations.'''
+
+    app.create_new_world(name,jargroup, version)
 
 
 if __name__ == '__main__':
