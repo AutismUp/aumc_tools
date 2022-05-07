@@ -2,9 +2,36 @@
 
 ## Overview
 
-The Autism Up Minecraft Tool is a wrapper script around the various Minecraft utilities needed to
+The Autism Up Minecraft Tool (aumc) is a wrapper script around the various Minecraft utilities needed to
 support AU's specific Minecraft configuration. Though not specifically required to support
 Minecraft, the tool makes creating, updating and support simpler.
+
+## Installation and setup
+
+To install:
+
+```bash
+
+pip install aumc
+
+```
+
+After installing, run the command line to generate a default configuration file, and a default Minecraft server.properties file:
+
+```
+au
+
+WARNING: AU_CONFIG_FILE environmental variable not set
+Do you want to create a new configuration file? (y/n)
+
+```
+
+When "y" is entered, two files will be created: config.json and server.properties
+
+Place them in a desired location, update config.json file to reference the location of the server.properties file, and set the AU_CONFIG_FILE environmental variable to be equal to the path of the config.json file.
+
+You're ready to start using aumc!
+
 
 ## Test and development setup
 

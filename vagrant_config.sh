@@ -226,4 +226,25 @@ chown -R minecraft:minecraft /opt/build_tools
 apt-get install -y python3-pip
 apt-get install -y python-is-python3
 
+# Add the AU Administrator account
+adduser --disabled-password --gecos "" auadmin
+usermod -aG sudo auadmin
+usermod -aG vagrant auadmin
+usermod -aG minecraft auadmin
+mkdir -p /home/auadmin/.ssh
+echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfQKxjJw9l+izgU6ItRHHk8J57csdcZetkp1lfVTiwNKCfElFEi+ahoa5eMfs2CNm4kdpvLEpwwcPvTtH++hTdVIIHNbqgp1mSVfCyjr068g76TqgBkbGIh76aQKB685njlONLNpc/yz/uom6DiqVrQwSzsdeOfbWkDCeoglq6m0BvgUNOKERmWzSRSYfU3PgMSh/T0AQgaoibEAO41BzresYjkSZJNq7KJGdQR/AGBPCXkYjJAjZXQFzVfaNvZFwh8dM+6i/lOShGY6Y06ApDj23RlqEwL0pXPSyWQYSlNtbjDIh13BFGCJUeKgpY+wUBnFAxrxXN3khsnXK8pOrh nwhat@DESKTOP-HEOCT0D >> /home/auadmin/.ssh/authorized_keys
+chmod -R go= /home/auadmin/.ssh
+chown -R auadmin:auadmin /home/auadmin/.ssh
+
+# Add the AU Operator account
+adduser --disabled-password --gecos "" auoperator
+usermod -aG sudo auoperator
+usermod -aG vagrant auoperator
+usermod -aG minecraft auoperator
+mkdir -p /home/auoperator/.ssh
+echo ssh-rsa  >> /home/auoperator/.ssh/authorized_keys
+chmod -R go= /home/auoperator/.ssh
+chown -R auoperator:auoperator /home/auoperator/.ssh
+
+
 install_log "Autism Up Minecraft server is ready to go!"
