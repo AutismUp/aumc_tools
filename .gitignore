@@ -131,4 +131,5 @@ dmypy.json
 
 # Any configuration files that make it into the repo by accident
 *.json
+server.properties.template
 .vagrant

@@ -246,5 +246,7 @@ echo ssh-rsa  >> /home/auoperator/.ssh/authorized_keys
 chmod -R go= /home/auoperator/.ssh
 chown -R auoperator:auoperator /home/auoperator/.ssh
 
+install_log "Installing the aumc command wrapper"
+pip install git+https://github.com/AutismUp/aumc_tools.git
 
 install_log "Autism Up Minecraft server is ready to go!"
