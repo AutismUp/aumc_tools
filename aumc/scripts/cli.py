@@ -1,4 +1,4 @@
-from au import au
+import aumc
 import click
 import os
 import sys
@@ -13,7 +13,7 @@ if not config_file_path:
     print('WARNING: AU_CONFIG_FILE environmental variable not set')
     create = input('Do you want to create a new configuration file? (y/n)')
     if create == 'y':
-        from au.config_templates import default_config, default_server_properties
+        from aumc.config_templates import default_config, default_server_properties
 
         with open('config.json', 'w') as config_file:
             config_file.write(default_config)
@@ -29,7 +29,7 @@ if not config_file_path:
         
 
 
-app = au.AuMc(config_file_path)
+app = aumc.AuMc(config_file_path)
 
 @cli.command()
 def check_config():
