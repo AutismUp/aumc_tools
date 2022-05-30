@@ -10,7 +10,7 @@ def cli():
 
 config_file_path = os.environ.get('AU_CONFIG_FILE')
 if not config_file_path:
-    print('WARNING: AU_CONFIG_FILE environmental variable is not set')
+    print('WARNING: The AU_CONFIG_FILE environmental variable is not set')
     create = input('Do you want to create a new configuration file? (y/n)')
     if create == 'y':
         from aumc.config_templates import default_config, default_server_properties
