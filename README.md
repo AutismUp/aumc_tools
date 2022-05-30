@@ -8,12 +8,10 @@ Minecraft, the tool makes creating, updating and support simpler.
 
 ## Installation and setup
 
-To install:
+To install the latest version of aumc:
 
 ```bash
-
-pip install aumc
-
+pip install git+https://github.com/AutismUp/aumc_tools.git 
 ```
 
 After installing, run the command line to generate a default configuration file, and a default Minecraft server.properties file:
@@ -23,7 +21,6 @@ au
 
 WARNING: AU_CONFIG_FILE environmental variable not set
 Do you want to create a new configuration file? (y/n)
-
 ```
 
 When "y" is entered, two files will be created: config.json and server.properties
@@ -32,6 +29,13 @@ Place them in a desired location, update config.json file to reference the locat
 
 You're ready to start using aumc!
 
+## Upgrade
+
+To upgrade an existing installation:
+
+```
+pip install --upgrade https://github.com/AutismUp/aumc_tools.git 
+```
 
 ## Test and development setup
 
