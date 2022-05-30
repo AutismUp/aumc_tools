@@ -1,4 +1,4 @@
-import aumc
+from aumc import aumc
 import click
 import os
 import sys
