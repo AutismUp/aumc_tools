@@ -112,7 +112,8 @@ class AuMc(object):
     def publish_new_jar(self):
         '''Push the noted jarfile of Minecraft to GitHub and create a new JarGroup in MSM'''
 
-        build_config = self.config['build_config'] 
+        build_config = self.config['build_config']
+        msm_path = self.config['msm_path']
        
         filename = f"spigot-{build_config['minecraft_version']}.jar"
 
