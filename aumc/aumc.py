@@ -173,8 +173,8 @@ class AuMc(object):
         subprocess.call(['sudo', 'msm', name, 'stop', 'now'])
         subprocess.call(['sudo', 'msm', name, 'worlds', 'ram', 'world'])
 
-        subprocess.run(['chown', '-R', 'minecraft', f'{self.msm_path}/servers/{name}'])
-        subprocess.run(['chgrp', '-R', 'minecraft', f'{self.msm_path}/servers/{name}'])
+        subprocess.run(['chown', '-R', 'minecraft', f'{msm_server_path}/{name}'])
+        subprocess.run(['chgrp', '-R', 'minecraft', f'{msm_server_path}/{name}'])
 
         print(f'World named "{name}" created')
 
