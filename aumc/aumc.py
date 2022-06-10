@@ -161,7 +161,9 @@ class AuMc(object):
         server_properties.update_config('msm-version', f'minecraft/{version}')
         server_properties.update_config('motd', f'Autism Up - {name}')
         server_properties.write_config(f'{msm_server_path}/{name}/server.properties')
-        
+
+
+
         subprocess.call(['sudo', 'msm', name, 'start'])
 
         for operator in self.config['op_usernames']:
@@ -169,6 +171,9 @@ class AuMc(object):
         
         subprocess.call(['sudo', 'msm', name, 'stop', 'now'])
         subprocess.call(['sudo', 'msm', name, 'worlds', 'ram', 'world'])
+
+        subprocess.run(['chown', '-R', 'minecraft', f'{self.msm_path}/servers/{name}'])
+        subprocess.run(['chgrp', '-R', 'minecraft', f'{self.msm_path}/servers/{name}'])
 
         print(f'World named "{name}" created')
 
@@ -207,5 +212,5 @@ class AuMc(object):
         subprocess.run(['unzip' f'{backup_filename}', '-d' f'{self.msm_path}/servers/{world_name}/worldstorage'])
 
         # Step 7 - Restore directory ownership to the "minecraft" Linux user
-        subprocess.run(['chown', '-R', 'minecraft', f'{self.msm_path}/servers/{world_name}/worldstorage/world'])
-        subprocess.run(['chgrp', '-R', 'minecraft', f'{self.msm_path}/servers/{world_name}/worldstorage/world'])
+        subprocess.run(['chown', '-R', 'minecraft', f'{self.msm_path}/servers/{world_name}'])
+        subprocess.run(['chgrp', '-R', 'minecraft', f'{self.msm_path}/servers/{world_name}'])
