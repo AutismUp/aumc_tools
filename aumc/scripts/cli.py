@@ -70,6 +70,8 @@ def create_new_world(name, from_config, jargroup, version):
 
     if from_config:
         click.echo("Creating worlds defined in the configuration file.")
+        jargroup = app.config['world_config']['jargroup']
+        version = app.config['world_config']['minecraft_version']
         for world in app.config['world_config']['world_names']:
             app.create_new_world(world, jargroup, version)
     else:
