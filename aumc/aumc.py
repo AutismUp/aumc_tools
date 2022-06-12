@@ -184,7 +184,7 @@ class AuMc(object):
         msm_archive_path = f"{self.config['msm_path']}/archives"
         subprocess.call(['sudo', 'msm', name, 'backup'])
         
-        list_of_files = glob.glob(f'{msm_archive_path}/backups/{name}*')
+        list_of_files = glob.glob(f'{msm_archive_path}/backups/{name}/*')
         latest_file = max(list_of_files, key=os.path.getctime)
         shutil.copy2(latest_file, Path.home())
 
