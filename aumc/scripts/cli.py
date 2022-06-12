@@ -85,19 +85,11 @@ def delete_world(name, from_config):
 
     if from_config:
         click.echo("Deleteing all the worlds from the config file.")
-        confirm = input("Are you sure? (y/n)")
-        if confirm == 'y':
-            for world in app.config['world_config']['world_names']:
-                app.delete_world(world)
-        else:
-            sys.exit('Deletion aborted')
+        for world in app.config['world_config']['world_names']:
+            app.delete_world(world)
     else:
-        click.echo(f"Deleteing world named {name}")
-        confirm = input("Are you sure? (y/n)")
-        if confirm == 'y':
-            app.delete_world(name)
+        app.delete_world(name)
  
-
 
 if __name__ == '__main__':
     cli()

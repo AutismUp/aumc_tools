@@ -181,14 +181,17 @@ class AuMc(object):
 
     def delete_world(self, name):
 
-        msm_backup_path = f"{self.config['msm_path']}/archives/backups/{name}"
+        msm_archive_path = f"{self.config['msm_path']}/archives"
         subprocess.call(['sudo', 'msm', name, 'backup'])
         
-        list_of_files = glob.glob(f'{msm_backup_path}/*')
+        list_of_files = glob.glob(f'{msm_archive_path}/backups/{name}*')
         latest_file = max(list_of_files, key=os.path.getctime)
         shutil.copy2(latest_file, Path.home())
 
         subprocess.call(['sudo', 'msm', 'server', 'delete', name])
+        subprocess.call(['sudo', 'rm', '-rf', f'{msm_archive_path}/backups/{name}'])
+        subprocess.call(['sudo', 'rm', '-rf', f'{msm_archive_path}/logs/{name}'])
+        subprocess.call(['sudo', 'rm', '-rf', f'{msm_archive_path}/worlds/{name}'])
 
 
     def restore_world(self, world_name, restore_to_date):
