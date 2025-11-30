@@ -133,3 +133,11 @@ dmypy.json
 *.json
 server.properties.template
 .vagrant
+
+# Go build artifacts
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib

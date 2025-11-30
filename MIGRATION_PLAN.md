@@ -10,9 +10,9 @@ Bottom-up conversion with incremental testing. Each phase should be completed an
 
 ## Phase 1: Project Setup & Foundation
 
-### Step 1.1: Initialize Go Module
-- [ ] Create `go.mod` with module name `github.com/AutismUp/aumc_tools`
-- [ ] Create directory structure:
+### Step 1.1: Initialize Go Module ✅
+- [x] Create `go.mod` with module name `github.com/AutismUp/aumc_tools`
+- [x] Create directory structure:
   ```
   cmd/aumc/          # CLI entry point
   internal/
@@ -20,7 +20,7 @@ Bottom-up conversion with incremental testing. Each phase should be completed an
     minecraft/       # Core business logic
     mcprops/         # server.properties parser
   ```
-- [ ] Add dependencies: `cobra`, `viper`
+- [x] Add dependencies: `cobra`, `viper`
 
 ### Step 1.2: Setup Build Tooling
 - [ ] Create `Makefile` with targets: `build`, `build-all` (cross-platform), `clean`
