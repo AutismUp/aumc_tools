@@ -22,10 +22,10 @@ Bottom-up conversion with incremental testing. Each phase should be completed an
   ```
 - [x] Add dependencies: `cobra`, `viper`
 
-### Step 1.2: Setup Build Tooling
-- [ ] Create `Makefile` with targets: `build`, `build-all` (cross-platform), `clean`
-- [ ] Add `.gitignore` entries for Go (`bin/`, `*.exe`, etc.)
-- [ ] Test: `go mod init` and `go mod tidy` work
+### Step 1.2: Setup Build Tooling ✅
+- [x] Create `Makefile` with targets: `build`, `build-all` (cross-platform), `clean`
+- [x] Add `.gitignore` entries for Go (`bin/`, `*.exe`, etc.)
+- [x] Test: `go mod init` and `go mod tidy` work
 
 ---
 
