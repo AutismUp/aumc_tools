@@ -150,3 +150,27 @@ func (c *Config) Validate() error {
 
 	return nil
 }
+
+// SaveDefaultFiles writes default `config.json` and `server.properties.template` to the current directory.
+// It overwrites existing files.
+func SaveDefaultFiles() error {
+	var defaultCfg Config
+	if err := json.Unmarshal([]byte(DefaultConfig), &defaultCfg); err != nil {
+		return fmt.Errorf("invalid default config template: %w", err)
+	}
+
+	prettyJSON, err := json.MarshalIndent(defaultCfg, "", "    ")
+	if err != nil {
+		return fmt.Errorf("failed to format default config: %w", err)
+	}
+
+	if err := os.WriteFile("config.json", prettyJSON, 0644); err != nil {
+		return fmt.Errorf("failed to write config.json: %w", err)
+	}
+
+	if err := os.WriteFile("server.properties.template", []byte(DefaultServerProperties), 0644); err != nil {
+		return fmt.Errorf("failed to write server.properties.template: %w", err)
+	}
+
+	return nil
+}
