@@ -16,10 +16,12 @@ vagrant ssh                                   # SSH into test server
 ## Code Style
 
 ### Imports
+
 - Standard library imports first, then third-party (Click), then local modules
 - Absolute imports preferred: `from aumc import aumc`
 
 ### Formatting & Structure
+
 - 4-space indentation
 - Classes use PascalCase: `AuMc`, `MCConfig`, `EnterDir`
 - Functions/methods use snake_case: `create_new_world`, `build_new_jar`
@@ -27,11 +29,28 @@ vagrant ssh                                   # SSH into test server
 - String quotes: single quotes preferred
 
 ### Error Handling
+
 - Custom exceptions for domain errors: `AuServerCreationException`, `AuRestoreException`
 - Use subprocess.call() for non-critical commands, subprocess.run() with check=True for critical ones
 - Print error messages to stdout for user feedback
 
 ### CLI Commands (Click framework)
+
 - All CLI commands decorated with @cli.command()
 - Use click.echo() for output, not print() in CLI commands
 - Options use --kebab-case format
+
+## Development Workflow
+
+For each new work task session:
+
+1. Create a new git branch and check it out.
+2. Push the empty branch to origin.
+3. Create a draft pull request against the new branch.
+4. Start work.
+
+Once work is complete and the branch has been successfully merged to main:
+
+1. Checkout main
+2. Pull all changes.
+3. Delete the local work branch
