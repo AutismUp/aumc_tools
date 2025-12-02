@@ -44,10 +44,13 @@ vagrant ssh                                   # SSH into test server
 
 For each new work task session:
 
-1. Create a new git branch and check it out.
-2. Push the empty branch to origin.
-3. Create a draft pull request against the new branch.
-4. Start work.
+
+1. Read the MIGRATION_PLAN.md file to make sure it is understood.
+2. Review the task(s) in the step we'll be working on.
+3. Create a new git branch and check it out.
+4. Push the empty branch to origin.
+5. Create a draft pull request against the new branch.
+6. Start work.
 
 Once work is complete and the branch has been successfully merged to main:
 
