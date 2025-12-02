@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  minecraft-test:
+    build: .
+    container_name: aumc-test-server
+    ports:
+      - "25565:25565"
+    volumes:
+      - ./:/workspace
+      - minecraft-data:/opt/msm
+    stdin_open: true
+    tty: true
+    working_dir: /workspace
+    user: testuser
+
+volumes:
+  minecraft-data:
