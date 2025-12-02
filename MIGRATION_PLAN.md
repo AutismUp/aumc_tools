@@ -31,15 +31,15 @@ Bottom-up conversion with incremental testing. Each phase should be completed an
 
 ## Phase 2: Core Infrastructure
 
-### Step 2.1: Configuration Management (Viper)
-- [ ] Port `config_templates.py` default templates as Go constants
-- [ ] Create Go structs for config.json structure:
+### Step 2.1: Configuration Management (Viper) ✅
+- [x] Port `config_templates.py` default templates as Go constants
+- [x] Create Go structs for config.json structure:
   - `Config` (root)
   - `BuildConfig`
   - `WorldConfig`
-- [ ] Implement config loading with Viper (env var `AU_CONFIG_FILE`)
-- [ ] Implement config initialization prompt (create default files)
-- [ ] Test: Load sample config.json, verify struct marshaling
+- [x] Implement config loading with Viper (env var `AU_CONFIG_FILE`)
+- [x] Implement config initialization prompt (create default files)
+- [x] Test: Load sample config.json, verify struct marshaling
 
 ### Step 2.2: MCConfig Parser (server.properties)
 - [ ] Port `MCConfig` class to Go struct/methods
