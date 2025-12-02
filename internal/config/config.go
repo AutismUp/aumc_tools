@@ -47,7 +47,7 @@ func Load() (*Config, error) {
 // LoadFromPath reads and parses the configuration file from a specific path
 func LoadFromPath(configPath string) (*Config, error) {
 	// Expand home directory if present
-	if configPath[:2] == "~/" {
+	if len(configPath) >= 2 && configPath[:2] == "~/" {
 		home, err := os.UserHomeDir()
 		if err != nil {
 			return nil, fmt.Errorf("failed to get home directory: %w", err)
@@ -82,7 +82,7 @@ func LoadFromPath(configPath string) (*Config, error) {
 // Returns the path where config.json was created
 func InitializeConfig(configDir string) (string, error) {
 	// Expand home directory if present
-	if configDir[:2] == "~/" {
+	if len(configDir) >= 2 && configDir[:2] == "~/" {
 		home, err := os.UserHomeDir()
 		if err != nil {
 			return "", fmt.Errorf("failed to get home directory: %w", err)
