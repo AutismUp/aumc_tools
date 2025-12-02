@@ -3,6 +3,14 @@
 ## Branch
 Working branch: `python-to-go`
 
+## Recent Updates
+**December 1, 2025**: Merged `origin/main` into `python-to-go` branch
+- Resolved merge conflicts in `go.mod`, `go.sum`, and `internal/config/config.go`
+- Kept newer dependency versions (Go 1.25.4, Cobra v1.10.1, Viper v1.21.0)
+- Added `SaveDefaultFiles()` function for CLI compatibility
+- Fixed `cmd/aumc/main.go` to properly call root command
+- All tests passing, binary builds and runs successfully
+
 ## Migration Strategy
 Bottom-up conversion with incremental testing. Each phase should be completed and tested before moving to the next.
 
