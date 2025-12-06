@@ -1,5 +1,7 @@
 # Autism Up Minecraft Tool
 
+[![Tests](https://github.com/AutismUp/aumc_tools/actions/workflows/test.yml/badge.svg)](https://github.com/AutismUp/aumc_tools/actions/workflows/test.yml)
+
 ## Overview
 
 The Autism Up Minecraft Tool (aumc) is a wrapper script around the various Minecraft utilities needed to
