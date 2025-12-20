@@ -49,12 +49,12 @@ Bottom-up conversion with incremental testing. Each phase should be completed an
 - [x] Implement config initialization prompt (create default files)
 - [x] Test: Load sample config.json, verify struct marshaling
 
-### Step 2.2: MCConfig Parser (server.properties)
-- [ ] Port `MCConfig` class to Go struct/methods
-- [ ] Implement `LoadProperties(filepath)` - parse key=value format, skip comments
-- [ ] Implement `UpdateProperty(key, value)`
-- [ ] Implement `WriteProperties(filepath)` - write with timestamp header
-- [ ] Test: Read/modify/write server.properties file
+### Step 2.2: MCConfig Parser (server.properties) ✅
+- [x] Port `MCConfig` class to Go struct/methods
+- [x] Implement `LoadProperties(filepath)` - parse key=value format, skip comments
+- [x] Implement `UpdateProperty(key, value)`
+- [x] Implement `WriteProperties(filepath)` - write with timestamp header
+- [x] Test: Read/modify/write server.properties file
 
 ### Step 2.3: Error Types ✅
 - [x] Define custom error types as Go errors
