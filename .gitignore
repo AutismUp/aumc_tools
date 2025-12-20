@@ -141,3 +141,13 @@ bin/
 *.dll
 *.so
 *.dylib
+
+# Go test artifacts
+*.test
+*.out
+coverage.txt
+coverage.html
+
+# Go workspace file
+go.work
+go.work.sum
