@@ -247,9 +247,9 @@ func TestSubprocessError(t *testing.T) {
 		name          string
 		command       string
 		reason        string
-		exitCode      int
 		stderr        string
 		shouldContain string
+		exitCode      int
 	}{
 		{
 			name:          "SubprocessError with exit code",
@@ -350,8 +350,8 @@ func TestFileSystemError(t *testing.T) {
 // TestErrorsImplementError verifies all error types implement the error interface
 func TestErrorsImplementError(t *testing.T) {
 	tests := []struct {
-		name string
 		err  error
+		name string
 	}{
 		{
 			name: "ConfigError implements error",
@@ -396,9 +396,9 @@ func TestErrorWrapping(t *testing.T) {
 	originalErr := fmt.Errorf("original error")
 
 	tests := []struct {
-		name          string
 		wrappedErr    interface{ Cause() error }
 		expectedCause error
+		name          string
 	}{
 		{
 			name:          "ConfigError wrapping",
@@ -432,9 +432,9 @@ func TestSubprocessExitErrorFormat(t *testing.T) {
 	tests := []struct {
 		name        string
 		command     string
-		exitCode    int
 		stderr      string
 		expectedMsg string
+		exitCode    int
 	}{
 		{
 			name:        "Exit code 1 with stderr",

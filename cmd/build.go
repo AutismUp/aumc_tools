@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -25,7 +26,11 @@ var publishNewJarCmd = &cobra.Command{
 	Short: "Publish jarfile to GitHub and create MSM jargroup",
 	Long:  `Push the specified jarfile of Minecraft to GitHub and create a new JarGroup in MSM.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		filename, _ := cmd.Flags().GetString("filename")
+		filename, err := cmd.Flags().GetString("filename")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting filename flag: %v\n", err)
+			os.Exit(1)
+		}
 
 		fmt.Printf("Publishing jar file: %s\n", filename)
 		fmt.Println("This publishes the new jar to GitHub")

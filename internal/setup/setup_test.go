@@ -19,7 +19,7 @@ func TestGoModuleExists(t *testing.T) {
 	goModPath := filepath.Join(projectRoot, "go.mod")
 
 	// Check if go.mod exists
-	if _, err := os.Stat(goModPath); os.IsNotExist(err) {
+	if _, statErr := os.Stat(goModPath); os.IsNotExist(statErr) {
 		t.Fatal("go.mod does not exist")
 	}
 
@@ -230,13 +230,13 @@ func TestCleanRemovesBuildArtifacts(t *testing.T) {
 	// Build first
 	buildCmd := exec.Command("make", "build")
 	buildCmd.Dir = projectRoot
-	if output, err := buildCmd.CombinedOutput(); err != nil {
-		t.Fatalf("make build failed: %v\nOutput: %s", err, string(output))
+	if output, cmdErr := buildCmd.CombinedOutput(); cmdErr != nil {
+		t.Fatalf("make build failed: %v\nOutput: %s", cmdErr, string(output))
 	}
 
 	// Verify binary exists
 	binaryPath := filepath.Join(projectRoot, "bin", "aumc")
-	if _, err := os.Stat(binaryPath); os.IsNotExist(err) {
+	if _, statErr := os.Stat(binaryPath); os.IsNotExist(statErr) {
 		t.Fatal("Binary was not created before clean test")
 	}
 
@@ -250,7 +250,7 @@ func TestCleanRemovesBuildArtifacts(t *testing.T) {
 
 	// Verify bin directory is removed
 	binPath := filepath.Join(projectRoot, "bin")
-	if _, err := os.Stat(binPath); !os.IsNotExist(err) {
+	if _, statErr := os.Stat(binPath); !os.IsNotExist(statErr) {
 		t.Error("bin/ directory still exists after make clean")
 	}
 }
@@ -285,13 +285,13 @@ func TestCrossCompilationTargets(t *testing.T) {
 		t.Run(tt.target, func(t *testing.T) {
 			cmd := exec.Command("make", tt.target)
 			cmd.Dir = projectRoot
-			output, err := cmd.CombinedOutput()
-			if err != nil {
-				t.Fatalf("make %s failed: %v\nOutput: %s", tt.target, err, string(output))
+			output, cmdErr := cmd.CombinedOutput()
+			if cmdErr != nil {
+				t.Fatalf("make %s failed: %v\nOutput: %s", tt.target, cmdErr, string(output))
 			}
 
 			binaryPath := filepath.Join(projectRoot, tt.expectedFile)
-			if _, err := os.Stat(binaryPath); os.IsNotExist(err) {
+			if _, statErr := os.Stat(binaryPath); os.IsNotExist(statErr) {
 				t.Errorf("Expected binary not created: %s", tt.expectedFile)
 			}
 		})
@@ -311,7 +311,7 @@ func TestMainPackageExists(t *testing.T) {
 	}
 
 	mainPath := filepath.Join(projectRoot, "cmd", "aumc", "main.go")
-	if _, err := os.Stat(mainPath); os.IsNotExist(err) {
+	if _, statErr := os.Stat(mainPath); os.IsNotExist(statErr) {
 		t.Fatal("cmd/aumc/main.go does not exist")
 	}
 
@@ -338,7 +338,7 @@ func TestRootCommandExists(t *testing.T) {
 	}
 
 	rootPath := filepath.Join(projectRoot, "cmd", "root.go")
-	if _, err := os.Stat(rootPath); os.IsNotExist(err) {
+	if _, statErr := os.Stat(rootPath); os.IsNotExist(statErr) {
 		t.Fatal("cmd/root.go does not exist")
 	}
 

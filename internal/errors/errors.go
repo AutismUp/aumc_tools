@@ -4,10 +4,10 @@ import "fmt"
 
 // ConfigError represents a configuration-related error
 type ConfigError struct {
+	Err       error  // Underlying error
 	FilePath  string // Path to the config file
 	Field     string // Field name that caused the error (if applicable)
 	Operation string // Description of what was being done
-	Err       error  // Underlying error
 }
 
 func (e *ConfigError) Error() string {
@@ -39,9 +39,9 @@ func NewConfigFieldError(filePath, field string, err error) *ConfigError {
 
 // PropertiesError represents a server.properties file operation error
 type PropertiesError struct {
+	Err       error  // Underlying error
 	FilePath  string // Path to the properties file
 	Operation string // What operation failed (read, write, parse)
-	Err       error  // Underlying error
 }
 
 func (e *PropertiesError) Error() string {
@@ -62,9 +62,9 @@ func NewPropertiesError(filePath, operation string, err error) *PropertiesError 
 
 // WorldError represents a world management error
 type WorldError struct {
+	Err       error  // Underlying error
 	WorldName string // Name of the world
 	Operation string // What operation failed (create, delete, restore)
-	Err       error  // Underlying error
 }
 
 func (e *WorldError) Error() string {
@@ -85,10 +85,10 @@ func NewWorldError(worldName, operation string, err error) *WorldError {
 
 // BuildError represents a jar building error
 type BuildError struct {
+	Err      error  // Underlying error
 	Version  string // Minecraft version being built
 	BuildDir string // Build directory
 	Phase    string // What phase of build failed
-	Err      error  // Underlying error
 }
 
 func (e *BuildError) Error() string {
@@ -112,10 +112,10 @@ func NewBuildError(version, phase string, err error) *BuildError {
 
 // PublishError represents a jar publishing error
 type PublishError struct {
+	Err      error  // Underlying error
 	Filename string // Filename of the jar
 	Repo     string // Git repository URL
 	Phase    string // What phase of publish failed
-	Err      error  // Underlying error
 }
 
 func (e *PublishError) Error() string {
@@ -139,11 +139,11 @@ func NewPublishError(filename, phase string, err error) *PublishError {
 
 // SubprocessError represents an error from external command execution
 type SubprocessError struct {
+	Err      error  // Underlying error
 	Command  string // Command that was executed
 	Reason   string // Why it failed (not found, timeout, etc.)
-	ExitCode int    // Exit code if available
 	Stderr   string // Stderr output if available
-	Err      error  // Underlying error
+	ExitCode int    // Exit code if available
 }
 
 func (e *SubprocessError) Error() string {
@@ -183,9 +183,9 @@ func NewSubprocessExitError(command string, exitCode int, stderr string) *Subpro
 
 // FileSystemError represents a filesystem operation error
 type FileSystemError struct {
+	Err       error  // Underlying error
 	Path      string // Path that was being accessed
 	Operation string // What operation failed (read, write, create, delete)
-	Err       error  // Underlying error
 }
 
 func (e *FileSystemError) Error() string {

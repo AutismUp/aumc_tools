@@ -15,10 +15,26 @@ var createNewWorldCmd = &cobra.Command{
 	Long: `Create a new world using Autism Up default configurations.
 Can create a single world by name or all worlds listed in the configuration file.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		name, _ := cmd.Flags().GetString("name")
-		fromConfig, _ := cmd.Flags().GetBool("from-config")
-		jargroup, _ := cmd.Flags().GetString("jargroup")
-		version, _ := cmd.Flags().GetString("version")
+		name, err := cmd.Flags().GetString("name")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting name flag: %v\n", err)
+			os.Exit(1)
+		}
+		fromConfig, err := cmd.Flags().GetBool("from-config")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting from-config flag: %v\n", err)
+			os.Exit(1)
+		}
+		jargroup, err := cmd.Flags().GetString("jargroup")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting jargroup flag: %v\n", err)
+			os.Exit(1)
+		}
+		version, err := cmd.Flags().GetString("version")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting version flag: %v\n", err)
+			os.Exit(1)
+		}
 
 		if fromConfig {
 			fmt.Println("Creating worlds defined in the configuration file.")

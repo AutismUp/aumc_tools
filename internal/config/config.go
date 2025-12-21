@@ -11,12 +11,12 @@ import (
 
 // BuildConfig represents the build configuration section
 type BuildConfig struct {
-	BuildDirectory   string   `json:"build_directory" mapstructure:"build_directory"`
 	TempFolders      []string `json:"temp_folders" mapstructure:"temp_folders"`
 	TempFiles        []string `json:"temp_files" mapstructure:"temp_files"`
+	BuildDirectory   string   `json:"build_directory" mapstructure:"build_directory"`
 	MinecraftVersion string   `json:"minecraft_version" mapstructure:"minecraft_version"`
-	DeleteSpigotJars bool     `json:"delete_spigot_jars" mapstructure:"delete_spigot_jars"`
 	JarGitRepo       string   `json:"jar_git_repo" mapstructure:"jar_git_repo"`
+	DeleteSpigotJars bool     `json:"delete_spigot_jars" mapstructure:"delete_spigot_jars"`
 }
 
 // WorldConfig represents the world configuration section
