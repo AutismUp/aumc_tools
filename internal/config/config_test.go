@@ -96,9 +96,9 @@ func TestInitializeConfig(t *testing.T) {
 
 func TestValidate(t *testing.T) {
 	tests := []struct {
-		config  Config
 		name    string
 		errMsg  string
+		config  Config
 		wantErr bool
 	}{
 		{

@@ -27,10 +27,10 @@ type WorldConfig struct {
 
 // Config represents the root configuration structure
 type Config struct {
-	WorldConfig WorldConfig `json:"world_config" mapstructure:"world_config"`
 	MSMPath     string      `json:"msm_path" mapstructure:"msm_path"`
-	BuildConfig BuildConfig `json:"build_config" mapstructure:"build_config"`
+	WorldConfig WorldConfig `json:"world_config" mapstructure:"world_config"`
 	OpUsernames []string    `json:"op_usernames" mapstructure:"op_usernames"`
+	BuildConfig BuildConfig `json:"build_config" mapstructure:"build_config"`
 }
 
 // Load reads and parses the configuration file using Viper
