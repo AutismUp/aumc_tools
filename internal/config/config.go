@@ -11,26 +11,26 @@ import (
 
 // BuildConfig represents the build configuration section
 type BuildConfig struct {
-	TempFolders      []string `json:"temp_folders" mapstructure:"temp_folders"`
-	TempFiles        []string `json:"temp_files" mapstructure:"temp_files"`
 	BuildDirectory   string   `json:"build_directory" mapstructure:"build_directory"`
 	MinecraftVersion string   `json:"minecraft_version" mapstructure:"minecraft_version"`
 	JarGitRepo       string   `json:"jar_git_repo" mapstructure:"jar_git_repo"`
+	TempFolders      []string `json:"temp_folders" mapstructure:"temp_folders"`
+	TempFiles        []string `json:"temp_files" mapstructure:"temp_files"`
 	DeleteSpigotJars bool     `json:"delete_spigot_jars" mapstructure:"delete_spigot_jars"`
 }
 
 // WorldConfig represents the world configuration section
 type WorldConfig struct {
-	WorldNames               []string `json:"world_names" mapstructure:"world_names"`
 	ServerPropertiesTemplate string   `json:"server_properties_template" mapstructure:"server_properties_template"`
+	WorldNames               []string `json:"world_names" mapstructure:"world_names"`
 }
 
 // Config represents the root configuration structure
 type Config struct {
-	OpUsernames []string    `json:"op_usernames" mapstructure:"op_usernames"`
-	BuildConfig BuildConfig `json:"build_config" mapstructure:"build_config"`
 	WorldConfig WorldConfig `json:"world_config" mapstructure:"world_config"`
 	MSMPath     string      `json:"msm_path" mapstructure:"msm_path"`
+	BuildConfig BuildConfig `json:"build_config" mapstructure:"build_config"`
+	OpUsernames []string    `json:"op_usernames" mapstructure:"op_usernames"`
 }
 
 // Load reads and parses the configuration file using Viper
