@@ -20,7 +20,11 @@ to point to the config.json file location.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Print("Do you want to create default configuration files? (y/n): ")
-		response, _ := reader.ReadString('\n')
+		response, err := reader.ReadString('\n')
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error reading input: %v\n", err)
+			os.Exit(1)
+		}
 		response = strings.TrimSpace(strings.ToLower(response))
 
 		if response == "y" || response == "yes" {

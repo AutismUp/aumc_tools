@@ -56,10 +56,10 @@ Bottom-up conversion with incremental testing. Each phase should be completed an
 - [x] Implement `WriteProperties(filepath)` - write with timestamp header
 - [x] Test: Read/modify/write server.properties file
 
-### Step 2.3: Error Types
-- [ ] Define custom error types as Go errors
-- [ ] Create error constructors/helpers
-- [ ] Test: Error creation and formatting
+### Step 2.3: Error Types ✅
+- [x] Define custom error types as Go errors
+- [x] Create error constructors/helpers
+- [x] Test: Error creation and formatting
 
 ---
 

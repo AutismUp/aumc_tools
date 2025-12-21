@@ -1,10 +1,10 @@
 package config
 
 import (
-"encoding/json"
-"os"
-"path/filepath"
-"testing"
+	"encoding/json"
+	"os"
+	"path/filepath"
+	"testing"
 )
 
 func TestLoadFromPath(t *testing.T) {
@@ -37,8 +37,8 @@ func TestLoadFromPath(t *testing.T) {
 		t.Fatalf("Failed to marshal test config: %v", err)
 	}
 
-	if err := os.WriteFile(configPath, configJSON, 0644); err != nil {
-		t.Fatalf("Failed to write test config: %v", err)
+	if writeErr := os.WriteFile(configPath, configJSON, 0644); writeErr != nil {
+		t.Fatalf("Failed to write test config: %v", writeErr)
 	}
 
 	cfg, err := LoadFromPath(configPath)
@@ -71,12 +71,12 @@ func TestInitializeConfig(t *testing.T) {
 		t.Fatalf("Failed to initialize config: %v", err)
 	}
 
-	if _, err := os.Stat(configPath); os.IsNotExist(err) {
+	if _, statErr := os.Stat(configPath); os.IsNotExist(statErr) {
 		t.Errorf("config.json was not created at %s", configPath)
 	}
 
 	templatePath := filepath.Join(tmpDir, "server.properties.template")
-	if _, err := os.Stat(templatePath); os.IsNotExist(err) {
+	if _, statErr := os.Stat(templatePath); os.IsNotExist(statErr) {
 		t.Errorf("server.properties.template was not created at %s", templatePath)
 	}
 
@@ -97,9 +97,9 @@ func TestInitializeConfig(t *testing.T) {
 func TestValidate(t *testing.T) {
 	tests := []struct {
 		name    string
+		errMsg  string
 		config  Config
 		wantErr bool
-		errMsg  string
 	}{
 		{
 			name: "valid config",
@@ -150,7 +150,7 @@ func TestValidate(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-err := tt.config.Validate()
+			err := tt.config.Validate()
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Validate() error = %v, wantErr %v", err, tt.wantErr)
 				return

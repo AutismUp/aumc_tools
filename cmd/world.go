@@ -15,14 +15,30 @@ var createNewWorldCmd = &cobra.Command{
 	Long: `Create a new world using Autism Up default configurations.
 Can create a single world by name or all worlds listed in the configuration file.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		name, _ := cmd.Flags().GetString("name")
-		fromConfig, _ := cmd.Flags().GetBool("from-config")
-		jargroup, _ := cmd.Flags().GetString("jargroup")
-		version, _ := cmd.Flags().GetString("version")
+		name, err := cmd.Flags().GetString("name")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting name flag: %v\n", err)
+			os.Exit(1)
+		}
+		fromConfig, err := cmd.Flags().GetBool("from-config")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting from-config flag: %v\n", err)
+			os.Exit(1)
+		}
+		jargroup, err := cmd.Flags().GetString("jargroup")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting jargroup flag: %v\n", err)
+			os.Exit(1)
+		}
+		version, err := cmd.Flags().GetString("version")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting version flag: %v\n", err)
+			os.Exit(1)
+		}
 
 		if fromConfig {
 			fmt.Println("Creating worlds defined in the configuration file.")
-			
+
 			// Get config values
 			configJargroup := viper.GetString("world_config.jargroup")
 			configVersion := viper.GetString("world_config.minecraft_version")
@@ -43,12 +59,12 @@ Can create a single world by name or all worlds listed in the configuration file
 				fmt.Fprintln(os.Stderr, "World name is required when not using --from-config")
 				os.Exit(1)
 			}
-			
+
 			fmt.Printf("Creating individual world named: %s\n", name)
 			// TODO: Implement world creation
 			fmt.Printf("  Jargroup: %s, Version: %s\n", jargroup, version)
 		}
-		
+
 		fmt.Println("World creation functionality not yet implemented")
 	},
 }
@@ -60,12 +76,20 @@ var deleteWorldCmd = &cobra.Command{
 	Long: `Deletes a world using Autism Up configurations.
 Creates a backup before deletion. Can delete a single world by name or all worlds listed in the configuration file.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		name, _ := cmd.Flags().GetString("name")
-		fromConfig, _ := cmd.Flags().GetBool("from-config")
+		name, err := cmd.Flags().GetString("name")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting name flag: %v\n", err)
+			os.Exit(1)
+		}
+		fromConfig, err := cmd.Flags().GetBool("from-config")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting from-config flag: %v\n", err)
+			os.Exit(1)
+		}
 
 		if fromConfig {
 			fmt.Println("Deleting all the worlds from the config file.")
-			
+
 			worldNames := viper.GetStringSlice("world_config.world_names")
 			if len(worldNames) == 0 {
 				fmt.Fprintln(os.Stderr, "No world names found in configuration")
@@ -81,11 +105,11 @@ Creates a backup before deletion. Can delete a single world by name or all world
 				fmt.Fprintln(os.Stderr, "World name is required when not using --from-config")
 				os.Exit(1)
 			}
-			
+
 			fmt.Printf("Deleting world: %s\n", name)
 			// TODO: Implement world deletion
 		}
-		
+
 		fmt.Println("World deletion functionality not yet implemented")
 	},
 }

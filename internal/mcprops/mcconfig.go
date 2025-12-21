@@ -20,7 +20,11 @@ func LoadProperties(path string) (*MCConfig, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to open properties file: %w", err)
 	}
-	defer file.Close()
+	defer func() {
+		if closeErr := file.Close(); closeErr != nil {
+			fmt.Fprintf(os.Stderr, "Warning: failed to close file: %v\n", closeErr)
+		}
+	}()
 
 	properties := make(map[string]string)
 	order := make([]string, 0)
@@ -73,7 +77,11 @@ func (c *MCConfig) WriteProperties(path string) error {
 	if err != nil {
 		return fmt.Errorf("failed to create properties file: %w", err)
 	}
-	defer file.Close()
+	defer func() {
+		if closeErr := file.Close(); closeErr != nil {
+			fmt.Fprintf(os.Stderr, "Warning: failed to close file: %v\n", closeErr)
+		}
+	}()
 
 	writer := bufio.NewWriter(file)
 
