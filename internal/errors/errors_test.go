@@ -396,23 +396,23 @@ func TestErrorWrapping(t *testing.T) {
 	originalErr := fmt.Errorf("original error")
 
 	tests := []struct {
-		name         string
-		wrappedErr   interface{ Cause() error }
+		name          string
+		wrappedErr    interface{ Cause() error }
 		expectedCause error
 	}{
 		{
-			name:         "ConfigError wrapping",
-			wrappedErr:   NewConfigError("file", "op", originalErr),
+			name:          "ConfigError wrapping",
+			wrappedErr:    NewConfigError("file", "op", originalErr),
 			expectedCause: originalErr,
 		},
 		{
-			name:         "WorldError wrapping",
-			wrappedErr:   NewWorldError("name", "op", originalErr),
+			name:          "WorldError wrapping",
+			wrappedErr:    NewWorldError("name", "op", originalErr),
 			expectedCause: originalErr,
 		},
 		{
-			name:         "BuildError wrapping",
-			wrappedErr:   NewBuildError("ver", "phase", originalErr),
+			name:          "BuildError wrapping",
+			wrappedErr:    NewBuildError("ver", "phase", originalErr),
 			expectedCause: originalErr,
 		},
 	}
@@ -430,25 +430,25 @@ func TestErrorWrapping(t *testing.T) {
 // TestSubprocessExitErrorFormat tests exit code error formatting
 func TestSubprocessExitErrorFormat(t *testing.T) {
 	tests := []struct {
-		name          string
-		command       string
-		exitCode      int
-		stderr        string
-		expectedMsg   string
+		name        string
+		command     string
+		exitCode    int
+		stderr      string
+		expectedMsg string
 	}{
 		{
-			name:          "Exit code 1 with stderr",
-			command:       "test-cmd",
-			exitCode:      1,
-			stderr:        "Error: file not found",
-			expectedMsg:   "subprocess error executing 'test-cmd': exit code 1 - Error: file not found",
+			name:        "Exit code 1 with stderr",
+			command:     "test-cmd",
+			exitCode:    1,
+			stderr:      "Error: file not found",
+			expectedMsg: "subprocess error executing 'test-cmd': exit code 1 - Error: file not found",
 		},
 		{
-			name:          "Exit code 127 without stderr",
-			command:       "missing-cmd",
-			exitCode:      127,
-			stderr:        "",
-			expectedMsg:   "subprocess error executing 'missing-cmd': exit code 127",
+			name:        "Exit code 127 without stderr",
+			command:     "missing-cmd",
+			exitCode:    127,
+			stderr:      "",
+			expectedMsg: "subprocess error executing 'missing-cmd': exit code 127",
 		},
 	}
 

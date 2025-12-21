@@ -30,7 +30,7 @@ func NewMCConfig(filepath string) (*MCConfig, error) {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
-		
+
 		// Skip comments and empty lines
 		if strings.HasPrefix(line, "#") || line == "" {
 			continue
@@ -116,7 +116,7 @@ type WorldInfo struct {
 // CreateWorld creates a new Minecraft world
 func (sm *ServerManager) CreateWorld(info *WorldInfo) error {
 	// TODO: Implement world creation using MSM
-	fmt.Printf("Creating world: %s with jargroup: %s, version: %s\n", 
+	fmt.Printf("Creating world: %s with jargroup: %s, version: %s\n",
 		info.Name, info.JarGroup, info.MinecraftVersion)
 	return fmt.Errorf("world creation not yet implemented")
 }
@@ -159,7 +159,7 @@ func NewDirectoryManager() *DirectoryManager {
 // EnterDir changes to a directory and returns a function to restore the original directory
 func (dm *DirectoryManager) EnterDir(path string) (func(), error) {
 	expandedPath := filepath.Clean(os.ExpandEnv(path))
-	
+
 	if err := os.Chdir(expandedPath); err != nil {
 		return nil, fmt.Errorf("failed to change directory to %s: %w", expandedPath, err)
 	}

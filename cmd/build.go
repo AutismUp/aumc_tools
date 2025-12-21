@@ -23,10 +23,10 @@ and copies it to the Git repo for publication.`,
 var publishNewJarCmd = &cobra.Command{
 	Use:   "publish-new-jar",
 	Short: "Publish jarfile to GitHub and create MSM jargroup",
-	Long: `Push the specified jarfile of Minecraft to GitHub and create a new JarGroup in MSM.`,
+	Long:  `Push the specified jarfile of Minecraft to GitHub and create a new JarGroup in MSM.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		filename, _ := cmd.Flags().GetString("filename")
-		
+
 		fmt.Printf("Publishing jar file: %s\n", filename)
 		fmt.Println("This publishes the new jar to GitHub")
 		// TODO: Implement publish functionality

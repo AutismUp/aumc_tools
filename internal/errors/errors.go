@@ -85,10 +85,10 @@ func NewWorldError(worldName, operation string, err error) *WorldError {
 
 // BuildError represents a jar building error
 type BuildError struct {
-	Version   string // Minecraft version being built
-	BuildDir  string // Build directory
-	Phase     string // What phase of build failed
-	Err       error  // Underlying error
+	Version  string // Minecraft version being built
+	BuildDir string // Build directory
+	Phase    string // What phase of build failed
+	Err      error  // Underlying error
 }
 
 func (e *BuildError) Error() string {
@@ -139,11 +139,11 @@ func NewPublishError(filename, phase string, err error) *PublishError {
 
 // SubprocessError represents an error from external command execution
 type SubprocessError struct {
-	Command string // Command that was executed
-	Reason  string // Why it failed (not found, timeout, etc.)
-	ExitCode int   // Exit code if available
-	Stderr  string // Stderr output if available
-	Err     error  // Underlying error
+	Command  string // Command that was executed
+	Reason   string // Why it failed (not found, timeout, etc.)
+	ExitCode int    // Exit code if available
+	Stderr   string // Stderr output if available
+	Err      error  // Underlying error
 }
 
 func (e *SubprocessError) Error() string {

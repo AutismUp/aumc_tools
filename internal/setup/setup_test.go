@@ -17,7 +17,7 @@ func TestGoModuleExists(t *testing.T) {
 	}
 
 	goModPath := filepath.Join(projectRoot, "go.mod")
-	
+
 	// Check if go.mod exists
 	if _, err := os.Stat(goModPath); os.IsNotExist(err) {
 		t.Fatal("go.mod does not exist")
@@ -209,7 +209,7 @@ func TestBuildProducesBinary(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to stat binary: %v", err)
 	}
-	
+
 	mode := info.Mode()
 	if mode&0111 == 0 {
 		t.Error("Binary is not executable")

@@ -22,7 +22,7 @@ Can create a single world by name or all worlds listed in the configuration file
 
 		if fromConfig {
 			fmt.Println("Creating worlds defined in the configuration file.")
-			
+
 			// Get config values
 			configJargroup := viper.GetString("world_config.jargroup")
 			configVersion := viper.GetString("world_config.minecraft_version")
@@ -43,12 +43,12 @@ Can create a single world by name or all worlds listed in the configuration file
 				fmt.Fprintln(os.Stderr, "World name is required when not using --from-config")
 				os.Exit(1)
 			}
-			
+
 			fmt.Printf("Creating individual world named: %s\n", name)
 			// TODO: Implement world creation
 			fmt.Printf("  Jargroup: %s, Version: %s\n", jargroup, version)
 		}
-		
+
 		fmt.Println("World creation functionality not yet implemented")
 	},
 }
@@ -65,7 +65,7 @@ Creates a backup before deletion. Can delete a single world by name or all world
 
 		if fromConfig {
 			fmt.Println("Deleting all the worlds from the config file.")
-			
+
 			worldNames := viper.GetStringSlice("world_config.world_names")
 			if len(worldNames) == 0 {
 				fmt.Fprintln(os.Stderr, "No world names found in configuration")
@@ -81,11 +81,11 @@ Creates a backup before deletion. Can delete a single world by name or all world
 				fmt.Fprintln(os.Stderr, "World name is required when not using --from-config")
 				os.Exit(1)
 			}
-			
+
 			fmt.Printf("Deleting world: %s\n", name)
 			// TODO: Implement world deletion
 		}
-		
+
 		fmt.Println("World deletion functionality not yet implemented")
 	},
 }
