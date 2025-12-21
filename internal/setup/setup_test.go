@@ -186,7 +186,7 @@ func TestBuildProducesBinary(t *testing.T) {
 	// Clean first
 	cleanCmd := exec.Command("make", "clean")
 	cleanCmd.Dir = projectRoot
-	if output, err := cleanCmd.CombinedOutput(); err != nil {
+	if output, cleanErr := cleanCmd.CombinedOutput(); cleanErr != nil {
 		t.Logf("make clean output: %s", string(output))
 	}
 
@@ -200,7 +200,7 @@ func TestBuildProducesBinary(t *testing.T) {
 
 	// Verify binary exists
 	binaryPath := filepath.Join(projectRoot, "bin", "aumc")
-	if _, err := os.Stat(binaryPath); os.IsNotExist(err) {
+	if _, statErr := os.Stat(binaryPath); os.IsNotExist(statErr) {
 		t.Errorf("Binary was not created at %s", binaryPath)
 	}
 

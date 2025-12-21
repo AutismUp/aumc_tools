@@ -76,8 +76,16 @@ var deleteWorldCmd = &cobra.Command{
 	Long: `Deletes a world using Autism Up configurations.
 Creates a backup before deletion. Can delete a single world by name or all worlds listed in the configuration file.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		name, _ := cmd.Flags().GetString("name")
-		fromConfig, _ := cmd.Flags().GetBool("from-config")
+		name, err := cmd.Flags().GetString("name")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting name flag: %v\n", err)
+			os.Exit(1)
+		}
+		fromConfig, err := cmd.Flags().GetBool("from-config")
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Error getting from-config flag: %v\n", err)
+			os.Exit(1)
+		}
 
 		if fromConfig {
 			fmt.Println("Deleting all the worlds from the config file.")
