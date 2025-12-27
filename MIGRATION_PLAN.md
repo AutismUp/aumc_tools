@@ -65,10 +65,10 @@ Bottom-up conversion with incremental testing. Each phase should be completed an
 
 ## Phase 3: Business Logic Layer
 
-### Step 3.1: Core AuMc Struct
-- [ ] Create `AuMc` struct with config field
-- [ ] Implement `NewAuMc(configPath)` constructor
-- [ ] Test: Initialize with valid config
+### Step 3.1: Core AuMc Struct ✅
+- [x] Create `AuMc` struct with config field
+- [x] Implement `NewAuMc(configPath)` constructor
+- [x] Test: Initialize with valid config
 
 ### Step 3.2: Build New Jar
 - [ ] Port `build_new_jar()` method
