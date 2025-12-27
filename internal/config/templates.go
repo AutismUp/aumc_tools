@@ -25,7 +25,9 @@ const DefaultConfig = `{
         "world_names": [
             "world1",
             "world2"
-        ]
+        ],
+        "jargroup": "",
+        "minecraft_version": ""
     },
     "op_usernames": [
         "op1",

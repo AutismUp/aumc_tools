@@ -22,6 +22,8 @@ type BuildConfig struct {
 // WorldConfig represents the world configuration section
 type WorldConfig struct {
 	ServerPropertiesTemplate string   `json:"server_properties_template" mapstructure:"server_properties_template"`
+	Jargroup                 string   `json:"jargroup" mapstructure:"jargroup"`
+	MinecraftVersion         string   `json:"minecraft_version" mapstructure:"minecraft_version"`
 	WorldNames               []string `json:"world_names" mapstructure:"world_names"`
 }
 
