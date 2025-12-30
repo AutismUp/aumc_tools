@@ -4,6 +4,12 @@
 Working branch: `python-to-go`
 
 ## Recent Updates
+**December 30, 2025 3**: Completed Phase 3, Step 3.5 - Jar Publishing
+- Implemented `PublishNewJar()` method in `internal/minecraft/aumc.go`
+- Method checks jar file exists, commits to GitHub, creates MSM jargroup
+- Added `replaceAll()` helper function to `internal/minecraft/utils.go`
+- All tests passing, 0 linter issues
+
 **December 30, 2025 2**: Completed Phase 3, Step 3.4 - World Management (Delete)
 - Implemented `DeleteWorld(name)` method in `internal/minecraft/aumc.go`
 - Method backs up world via MSM, finds latest backup, copies to home directory
@@ -107,10 +113,10 @@ Bottom-up conversion with incremental testing. Each phase should be completed an
 - [x] Clean up MSM archives
 - [ ] Test: Delete test world in Docker environment
 
-### Step 3.5: Jar Publishing
-- [ ] Port `publish_new_jar()` method
-- [ ] Git operations (add, commit, push)
-- [ ] MSM jargroup creation
+### Step 3.5: Jar Publishing ✅
+- [x] Port `publish_new_jar()` method
+- [x] Git operations (add, commit, push)
+- [x] MSM jargroup creation
 - [ ] Test: Mock git operations
 
 ### Step 3.6: World Restoration (Optional)
