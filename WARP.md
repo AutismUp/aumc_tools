@@ -133,16 +133,29 @@ Uses **Cobra** for CLI. All commands are registered in `cmd/` package:
 3. Execute BuildTools.jar with specified Minecraft version
 4. Copy resulting spigot*.jar to git repo jars/ directory
 
+**World Creation** (`AuMc.CreateNewWorld`):
+1. Create world using MSM `server create` command
+2. Set jargroup for the world using MSM `jar` command
+3. Generate eula.txt file with timestamp and EULA acceptance
+4. Load server.properties template and update with version and MOTD
+5. Start server to generate world files
+6. Add configured operators using MSM `op add` command
+7. Stop server
+8. Configure world RAM settings
+9. Set file ownership to minecraft user
+
 **World Management** (partially implemented):
-- Create: Calls MSM commands, generates eula.txt, updates server.properties, sets operators, adjusts file ownership
-- Delete: Creates backup, copies to home directory, cleans MSM archives
+- Create: ✅ Implemented
+- Delete: Not yet implemented - will create backup, copy to home directory, clean MSM archives
 
 ## Migration Status
 
 This project is migrating from Python to Go. See `MIGRATION_PLAN.md` for detailed status. Current state:
 - Phase 1-2 (Setup, Config, MCConfig parser): ✅ Complete
-- Phase 3 (Build, World management): Partially complete
-- Phase 4-5 (CLI commands, Testing): In progress
+- Phase 3 (Business Logic Layer): In progress
+  - Steps 3.1-3.3: ✅ Complete (AuMc struct, BuildNewJar, CreateNewWorld)
+  - Steps 3.4-3.6: Not started (DeleteWorld, PublishNewJar, RestoreWorld)
+- Phase 4-5 (CLI commands, Testing): Not started
 
 ## Development Workflow
 
@@ -248,9 +261,10 @@ The Docker container (`aumc-test-server`) provides:
 
 GitHub Actions workflow (`.github/workflows/test.yml`):
 - Runs on pushes to `main` and `python-to-go` branches
-- Two jobs: **test** (runs tests, builds all platforms) and **lint** (golangci-lint)
+- Two jobs: **test** (runs tests, builds all platforms) and **lint** (golangci-lint v2.7.2)
 - Uses Go 1.23
 - Validates: dependencies, tests pass, builds succeed for all platforms
+- Linter config uses golangci-lint v2 format with essential linters: errcheck, govet, ineffassign, staticcheck, unused
 
 ## Configuration Files
 

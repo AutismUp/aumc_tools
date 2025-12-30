@@ -4,6 +4,14 @@
 Working branch: `python-to-go`
 
 ## Recent Updates
+**December 30, 2024**: Completed Phase 3, Step 3.3 - World Management (Create)
+- Implemented `CreateNewWorld(name, jargroup, version)` method in `internal/minecraft/aumc.go`
+- Method creates worlds via MSM, generates eula.txt, configures server.properties
+- Starts server, adds operators, stops server, sets file ownership
+- Fixed linter issues across codebase (errcheck, staticcheck)
+- Updated golangci-lint to v2.7.2 and simplified config for v2 format
+- All tests passing, 0 linter issues
+
 **December 1, 2025**: Merged `origin/main` into `python-to-go` branch
 - Resolved merge conflicts in `go.mod`, `go.sum`, and `internal/config/config.go`
 - Kept newer dependency versions (Go 1.25.4, Cobra v1.10.1, Viper v1.21.0)
@@ -77,14 +85,14 @@ Bottom-up conversion with incremental testing. Each phase should be completed an
 - [x] Copy jar files to git repo
 - [x] Test: Dry run without actual BuildTools execution
 
-### Step 3.3: World Management - Create
-- [ ] Port `create_new_world(name, jargroup, version)` method
-- [ ] Execute MSM commands via subprocess
-- [ ] Generate eula.txt file
-- [ ] Update server.properties via MCConfig
-- [ ] Handle operator additions
-- [ ] Set file ownership (chown/chgrp)
-- [ ] Test: Create test world in Vagrant VM
+### Step 3.3: World Management - Create ✅
+- [x] Port `create_new_world(name, jargroup, version)` method
+- [x] Execute MSM commands via subprocess
+- [x] Generate eula.txt file
+- [x] Update server.properties via MCConfig
+- [x] Handle operator additions
+- [x] Set file ownership (chown/chgrp)
+- [ ] Test: Create test world in Docker environment
 
 ### Step 3.4: World Management - Delete
 - [ ] Port `delete_world(name)` method
