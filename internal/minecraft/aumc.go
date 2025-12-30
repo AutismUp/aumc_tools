@@ -5,8 +5,10 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"time"
 
 	"github.com/AutismUp/aumc_tools/internal/config"
+	"github.com/AutismUp/aumc_tools/internal/mcprops"
 )
 
 // AuMc is the main business logic handler for Autism Up Minecraft server management
@@ -152,5 +154,108 @@ func (a *AuMc) BuildNewJar() error {
 	}
 
 	fmt.Println("BuildTools complete")
+	return nil
+}
+
+// CreateNewWorld creates a new Minecraft world with the specified name, jargroup, and version
+func (a *AuMc) CreateNewWorld(name, jargroup, version string) error {
+	msmServerPath := filepath.Join(a.config.MSMPath, "servers")
+	timeStamp := time.Now().Format("Mon Jan 02 15:04:05 MST 2006")
+
+	// Step 1: Create the world using MSM
+	fmt.Printf("Creating world '%s'...\n", name)
+	cmd := exec.Command("sudo", "msm", "server", "create", name)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("failed to create world: %w", err)
+	}
+
+	// Step 2: Set the jargroup for the world
+	fmt.Printf("Setting jargroup '%s' for world '%s'...\n", jargroup, name)
+	cmd = exec.Command("sudo", "msm", name, "jar", jargroup)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("failed to set jargroup: %w", err)
+	}
+
+	// Step 3: Create the eula.txt file
+	fmt.Println("Creating eula.txt...")
+	eulaPath := filepath.Join(msmServerPath, name, "eula.txt")
+	eulaContent := fmt.Sprintf("#By changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula).\n#%s\neula=true\n", timeStamp)
+	if err := os.WriteFile(eulaPath, []byte(eulaContent), 0644); err != nil {
+		return fmt.Errorf("failed to create eula.txt: %w", err)
+	}
+
+	// Step 4: Update server.properties template and copy to the server folder
+	fmt.Println("Configuring server.properties...")
+	serverProps, err := mcprops.LoadProperties(a.config.WorldConfig.ServerPropertiesTemplate)
+	if err != nil {
+		return fmt.Errorf("failed to load server.properties template: %w", err)
+	}
+
+	serverProps.UpdateProperty("msm-version", fmt.Sprintf("minecraft/%s", version))
+	serverProps.UpdateProperty("motd", fmt.Sprintf("Autism Up - %s", name))
+
+	serverPropsPath := filepath.Join(msmServerPath, name, "server.properties")
+	if err := serverProps.WriteProperties(serverPropsPath); err != nil {
+		return fmt.Errorf("failed to write server.properties: %w", err)
+	}
+
+	// Step 5: Start the server
+	fmt.Println("Starting server...")
+	cmd = exec.Command("sudo", "msm", name, "start")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("failed to start server: %w", err)
+	}
+
+	// Step 6: Add operators
+	for _, operator := range a.config.OpUsernames {
+		fmt.Printf("Adding operator '%s'...\n", operator)
+		cmd = exec.Command("sudo", "msm", name, "op", "add", operator)
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		if err := cmd.Run(); err != nil {
+			fmt.Printf("Warning: failed to add operator %s: %v\n", operator, err)
+			// Continue with other operators even if one fails
+		}
+	}
+
+	// Step 7: Stop the server
+	fmt.Println("Stopping server...")
+	cmd = exec.Command("sudo", "msm", name, "stop", "now")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("failed to stop server: %w", err)
+	}
+
+	// Step 8: Configure world RAM settings
+	fmt.Println("Configuring world RAM settings...")
+	cmd = exec.Command("sudo", "msm", name, "worlds", "ram", "world")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		fmt.Printf("Warning: failed to configure world RAM: %v\n", err)
+		// Non-critical, continue
+	}
+
+	// Step 9: Set file ownership to minecraft user
+	fmt.Println("Setting file ownership...")
+	worldPath := filepath.Join(msmServerPath, name)
+	cmd = exec.Command("sudo", "chown", "-R", "minecraft", worldPath)
+	if err := cmd.Run(); err != nil {
+		fmt.Printf("Warning: failed to chown: %v\n", err)
+	}
+
+	cmd = exec.Command("sudo", "chgrp", "-R", "minecraft", worldPath)
+	if err := cmd.Run(); err != nil {
+		fmt.Printf("Warning: failed to chgrp: %v\n", err)
+	}
+
+	fmt.Printf("World named \"%s\" created\n", name)
 	return nil
 }
