@@ -348,3 +348,94 @@ func (a *AuMc) DeleteWorld(name string) error {
 	fmt.Printf("World '%s' deleted successfully. Backup saved to %s\n", name, destPath)
 	return nil
 }
+
+// PublishNewJar commits the specified jar file to GitHub and creates a new jargroup in MSM
+func (a *AuMc) PublishNewJar() error {
+	buildConfig := &a.config.BuildConfig
+
+	// Step 1: Build filename from Minecraft version
+	filename := fmt.Sprintf("spigot-%s.jar", buildConfig.MinecraftVersion)
+	jarPath := filepath.Join(buildConfig.JarGitRepo, "jars", filename)
+
+	// Step 2: Check if jar file exists
+	if !fileExists(jarPath) {
+		return fmt.Errorf("the jar file is not in %s/jars. Did you build it?", buildConfig.JarGitRepo)
+	}
+
+	// Step 3: Commit and push to GitHub
+	fmt.Println("Committing new jar to GitHub...")
+
+	// Save current directory and change to git repo directory
+	originalDir, err := os.Getwd()
+	if err != nil {
+		return fmt.Errorf("failed to get current directory: %w", err)
+	}
+	defer func() {
+		if err := os.Chdir(originalDir); err != nil {
+			fmt.Printf("Warning: failed to restore original directory: %v\n", err)
+		}
+	}()
+
+	if err := os.Chdir(buildConfig.JarGitRepo); err != nil {
+		return fmt.Errorf("failed to change to git repo directory: %w", err)
+	}
+
+	// Git add
+	cmd := exec.Command("git", "add", "-A")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("git add failed: %w", err)
+	}
+
+	// Git commit
+	cmd = exec.Command("git", "commit", "-m", "New Minecraft jar added via script")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		// Check if there's nothing to commit
+		fmt.Printf("Warning: git commit failed (possibly nothing to commit): %v\n", err)
+	}
+
+	// Git push
+	cmd = exec.Command("git", "push", "origin", "master")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("git push failed: %w", err)
+	}
+
+	fmt.Println("New jar committed to GitHub")
+
+	// Step 4: Create jargroup name and URL
+	// Convert "spigot-1.20.1.jar" -> "1_20_1"
+	// Remove "spigot-" prefix, remove ".jar" suffix, replace "." and "-" with "_"
+	jargroupName := buildConfig.MinecraftVersion
+	jargroupName = filepath.Base(jargroupName) // Remove any path components
+	jargroupName = replaceAll(jargroupName, ".", "_")
+	jargroupName = replaceAll(jargroupName, "-", "_")
+
+	jargroupURL := fmt.Sprintf("https://github.com/thehatchcloud/minecraft_jars/raw/master/jars/%s", filename)
+
+	// Step 5: Create MSM jargroup
+	fmt.Println("Adding the new jargroup...")
+	cmd = exec.Command("sudo", "msm", "jargroup", "create", jargroupName, jargroupURL)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("failed to create jargroup: %w", err)
+	}
+
+	// Step 6: Download the latest jar
+	cmd = exec.Command("sudo", "msm", "jargroup", "getlatest", jargroupName)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("failed to get latest jargroup: %w", err)
+	}
+
+	fmt.Println("Adding the latest jar is complete!")
+	fmt.Printf("New jargroup name is %s\n", jargroupName)
+
+	return nil
+}
