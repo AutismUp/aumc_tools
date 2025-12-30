@@ -8,11 +8,15 @@ import (
 )
 
 func TestLoadFromPath(t *testing.T) {
-	tmpDir, err := os.MkdirTemp("", "aumc-config-test-*")
+	tmpDir, err := os.MkdirTemp("", "aumc-config-test")
 	if err != nil {
 		t.Fatalf("Failed to create temp dir: %v", err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() {
+		if err := os.RemoveAll(tmpDir); err != nil {
+			t.Logf("Warning: failed to remove temp dir: %v", err)
+		}
+	}()
 
 	testConfig := Config{
 		MSMPath: "/opt/msm",
@@ -64,7 +68,11 @@ func TestInitializeConfig(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to create temp dir: %v", err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() {
+		if err := os.RemoveAll(tmpDir); err != nil {
+			t.Logf("Warning: failed to remove temp dir: %v", err)
+		}
+	}()
 
 	configPath, err := InitializeConfig(tmpDir)
 	if err != nil {

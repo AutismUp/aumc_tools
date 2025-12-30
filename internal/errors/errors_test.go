@@ -386,7 +386,7 @@ func TestErrorsImplementError(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			// This will fail to compile if the type doesn't implement error
-			var _ error = tt.err
+			_ = tt.err
 		})
 	}
 }
