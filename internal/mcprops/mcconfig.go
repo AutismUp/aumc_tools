@@ -90,7 +90,7 @@ func (c *MCConfig) WriteProperties(path string) error {
 	}
 
 	timestamp := fmt.Sprintf("%s EST %d", time.Now().Format("Mon Jan 02 15:04:05"), time.Now().Year())
-	if _, err := writer.WriteString(fmt.Sprintf("#%s\n", timestamp)); err != nil {
+	if _, err := fmt.Fprintf(writer, "#%s\n", timestamp); err != nil {
 		return fmt.Errorf("failed to write timestamp: %w", err)
 	}
 
@@ -121,7 +121,7 @@ func (c *MCConfig) WriteProperties(path string) error {
 }
 
 func writeProperty(writer *bufio.Writer, key, value string) error {
-	if _, err := writer.WriteString(fmt.Sprintf("%s=%s\n", key, value)); err != nil {
+	if _, err := fmt.Fprintf(writer, "%s=%s\n", key, value); err != nil {
 		return fmt.Errorf("failed to write property %s: %w", key, err)
 	}
 	return nil
