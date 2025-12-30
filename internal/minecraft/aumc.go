@@ -259,3 +259,92 @@ func (a *AuMc) CreateNewWorld(name, jargroup, version string) error {
 	fmt.Printf("World named \"%s\" created\n", name)
 	return nil
 }
+
+// DeleteWorld backs up a world, copies the backup to the home directory, and deletes it from MSM
+func (a *AuMc) DeleteWorld(name string) error {
+	msmArchivePath := filepath.Join(a.config.MSMPath, "archives")
+	backupPath := filepath.Join(msmArchivePath, "backups", name)
+
+	// Step 1: Backup the world before deletion
+	fmt.Printf("Backing up world '%s'...\n", name)
+	cmd := exec.Command("sudo", "msm", name, "backup")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("failed to backup world: %w", err)
+	}
+
+	// Step 2: Find the latest backup file
+	fmt.Println("Finding latest backup file...")
+	backupFiles, err := filepath.Glob(filepath.Join(backupPath, "*"))
+	if err != nil {
+		return fmt.Errorf("failed to find backup files: %w", err)
+	}
+
+	if len(backupFiles) == 0 {
+		return fmt.Errorf("no backup files found in %s", backupPath)
+	}
+
+	// Find the most recently created backup file
+	var latestFile string
+	var latestTime time.Time
+	for _, file := range backupFiles {
+		info, err := os.Stat(file)
+		if err != nil {
+			continue
+		}
+		if info.ModTime().After(latestTime) {
+			latestTime = info.ModTime()
+			latestFile = file
+		}
+	}
+
+	if latestFile == "" {
+		return fmt.Errorf("could not determine latest backup file")
+	}
+
+	// Step 3: Copy the latest backup to the home directory
+	homedir, err := os.UserHomeDir()
+	if err != nil {
+		return fmt.Errorf("failed to get home directory: %w", err)
+	}
+
+	destPath := filepath.Join(homedir, filepath.Base(latestFile))
+	fmt.Printf("Copying backup to %s...\n", destPath)
+	if err := copyFile(latestFile, destPath); err != nil {
+		return fmt.Errorf("failed to copy backup file: %w", err)
+	}
+
+	// Step 4: Delete the server
+	fmt.Printf("Deleting world '%s'...\n", name)
+	cmd = exec.Command("sudo", "msm", "server", "delete", name)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("failed to delete server: %w", err)
+	}
+
+	// Step 5: Clean up MSM archives
+	fmt.Println("Cleaning up MSM archives...")
+
+	// Remove backups directory
+	cmd = exec.Command("sudo", "rm", "-rf", filepath.Join(msmArchivePath, "backups", name))
+	if err := cmd.Run(); err != nil {
+		fmt.Printf("Warning: failed to remove backups directory: %v\n", err)
+	}
+
+	// Remove logs directory
+	cmd = exec.Command("sudo", "rm", "-rf", filepath.Join(msmArchivePath, "logs", name))
+	if err := cmd.Run(); err != nil {
+		fmt.Printf("Warning: failed to remove logs directory: %v\n", err)
+	}
+
+	// Remove worlds directory
+	cmd = exec.Command("sudo", "rm", "-rf", filepath.Join(msmArchivePath, "worlds", name))
+	if err := cmd.Run(); err != nil {
+		fmt.Printf("Warning: failed to remove worlds directory: %v\n", err)
+	}
+
+	fmt.Printf("World '%s' deleted successfully. Backup saved to %s\n", name, destPath)
+	return nil
+}
