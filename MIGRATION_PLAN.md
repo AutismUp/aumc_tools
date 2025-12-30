@@ -70,12 +70,12 @@ Bottom-up conversion with incremental testing. Each phase should be completed an
 - [x] Implement `NewAuMc(configPath)` constructor
 - [x] Test: Initialize with valid config
 
-### Step 3.2: Build New Jar
-- [ ] Port `build_new_jar()` method
-- [ ] Handle directory cleanup (temp folders, temp files, old jars)
-- [ ] Execute Java subprocess for BuildTools
-- [ ] Copy jar files to git repo
-- [ ] Test: Dry run without actual BuildTools execution
+### Step 3.2: Build New Jar ✅
+- [x] Port `build_new_jar()` method
+- [x] Handle directory cleanup (temp folders, temp files, old jars)
+- [x] Execute Java subprocess for BuildTools
+- [x] Copy jar files to git repo
+- [x] Test: Dry run without actual BuildTools execution
 
 ### Step 3.3: World Management - Create
 - [ ] Port `create_new_world(name, jargroup, version)` method
