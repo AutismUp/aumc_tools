@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 )
 
 // copyFile copies a file from src to dst
@@ -56,4 +57,9 @@ func dirExists(path string) bool {
 		return false
 	}
 	return info.IsDir()
+}
+
+// replaceAll replaces all occurrences of old with new in the string s
+func replaceAll(s, old, new string) string {
+	return strings.ReplaceAll(s, old, new)
 }
