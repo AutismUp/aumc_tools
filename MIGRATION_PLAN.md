@@ -4,7 +4,13 @@
 Working branch: `python-to-go`
 
 ## Recent Updates
-**December 30, 2024**: Completed Phase 3, Step 3.3 - World Management (Create)
+**December 30, 2025 2**: Completed Phase 3, Step 3.4 - World Management (Delete)
+- Implemented `DeleteWorld(name)` method in `internal/minecraft/aumc.go`
+- Method backs up world via MSM, finds latest backup, copies to home directory
+- Deletes server via MSM and cleans up archive directories (backups, logs, worlds)
+- All tests passing, 0 linter issues
+
+**December 30, 2025**: Completed Phase 3, Step 3.3 - World Management (Create)
 - Implemented `CreateNewWorld(name, jargroup, version)` method in `internal/minecraft/aumc.go`
 - Method creates worlds via MSM, generates eula.txt, configures server.properties
 - Starts server, adds operators, stops server, sets file ownership
@@ -94,12 +100,12 @@ Bottom-up conversion with incremental testing. Each phase should be completed an
 - [x] Set file ownership (chown/chgrp)
 - [ ] Test: Create test world in Docker environment
 
-### Step 3.4: World Management - Delete
-- [ ] Port `delete_world(name)` method
-- [ ] Backup world before deletion
-- [ ] Copy latest backup to home directory
-- [ ] Clean up MSM archives
-- [ ] Test: Delete test world in Vagrant VM
+### Step 3.4: World Management - Delete ✅
+- [x] Port `delete_world(name)` method
+- [x] Backup world before deletion
+- [x] Copy latest backup to home directory
+- [x] Clean up MSM archives
+- [ ] Test: Delete test world in Docker environment
 
 ### Step 3.5: Jar Publishing
 - [ ] Port `publish_new_jar()` method
